@@ -1,6 +1,6 @@
 
 #  react 18v examples
-(Doc)[https://react.dev/]
+[Doc](https://react.dev/)
 # useTransition
 
 - startTransition - Giving back the control to the browser after every frame
@@ -77,6 +77,7 @@ export function Todos() {
 # use
 
 excited about it ;)
-(doc)[https://react.dev/reference/react/use]
+[doc](https://react.dev/reference/react/use0
+
 
 
