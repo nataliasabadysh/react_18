@@ -1,5 +1,7 @@
 
-#  react 18v useTransition
+#  react 18v examples
+(Doc)[https://react.dev/]
+# useTransition
 
 - startTransition - Giving back the control to the browser after every frame
 
@@ -41,9 +43,40 @@ export function NotesList(): JSX.Element {
     </>
   );
 }
-
-
 ```
 
+# useEffect 
+
+- we use for synchronization with activity effects 
+- action effects happen outside of rendering 
+
+
+# useSyncExternalStore
+- 
+
+```js
+import { useSyncExternalStore } from 'react';
+
+export function Todos() {
+  const todos = useSyncExternalStore(storeApi.subscribe, storeApi.getSnapshot);
+
+  return (
+    <>
+      <button onClick={() => storeApi.addTodo()}>Add todo</button>
+      <hr />
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+# use
+
+excited about it ;)
+(doc)[https://react.dev/reference/react/use]
 
 

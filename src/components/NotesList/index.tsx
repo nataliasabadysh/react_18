@@ -1,49 +1,51 @@
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+import { fetchBreeds } from "../../api";
 
-interface IDataItem {
+interface IDog {
   name: string;
   id: number;
 }
-
-const data: IDataItem[] = [
-  {
-    name: "js",
-    id: 1,
-  },
-  {
-    name: "react",
-    id: 2,
-  },
-  {
-    name: "node",
-    id: 3,
-  },
-  {
-    name: "graphql",
-    id: 4,
-  },
-];
 
 export function NotesList(): JSX.Element {
 
   const [filterValue, setFilterValue] = useState("");
   const [filterInput, setFilterInput] = useState("");
 
+  const [dogs, setDogs] = useState<IDog[]>([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
 
   const [isPanding, startTransition] = useTransition()
 
-  const filteredData: IDataItem[] = data.filter((item) =>
+  useEffect(() => {
+    async function getBreeds() {
+      try {
+        setIsLoading(true);
+        const fetchedBreeds = await fetchBreeds();
+        setDogs(fetchedBreeds);
+      } catch (error) {
+        setError('Error fetching data');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getBreeds();
+  }, []);
+
+
+  const filteredDogs: IDog[] = dogs.filter((item) =>
     item.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-   
-    setFilterValue(e.target.value);
+    const value = e.target.value;
+    setFilterValue(value);
 
-    startTransition(()=> {
-      // Giving back the control to the browser after every frame
-      setFilterInput(e.target.value);
-    })
+    startTransition(() => {
+      setFilterInput(value);
+    });
   };
 
   return (
@@ -55,10 +57,11 @@ export function NotesList(): JSX.Element {
         onChange={handleFilterChange}
       />
       <ul>
-        {filteredData.map((item) => (
-          <li key={item.id}>{item.name}</li>
+        {filteredDogs.map((dog) => (
+          <li key={dog.id}>{dog.name}</li>
         ))}
       </ul>
+      {error && <>{error}</>}
     </>
   );
 }
