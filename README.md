@@ -77,7 +77,8 @@ export function Todos() {
 # use
 
 excited about it ;)
-[doc](https://react.dev/reference/react/use0
+
+[doc](https://react.dev/reference/react/use)
 
 
 
